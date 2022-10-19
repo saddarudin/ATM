@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class Administrator {
     double balance;
     int accountNumber=15;
-    String accNo=String.valueOf(accountNumber);
+//    String accNo=String.valueOf(accountNumber);
+    String date="20/10/2022";
     String login;
     String pin;
     String name="X";
@@ -29,7 +30,7 @@ public class Administrator {
             case "3" ->update_account_information();
             case "4" ->search_for_account();
             case "5" ->view_reports();
-            case "6" ->System.exit(0);
+            case "6" ->ATM_Machine.main(null);
             default ->{
                 System.out.println("                                *** Please enter correct input!!  ***" +
                         "\n-----------------------------------------------------------------------------------------------------------------------------");
@@ -43,7 +44,6 @@ public class Administrator {
 
         }
     }
-
     public void creating_new_account(){
         System.out.println("1----Create New Account");
         System.out.println("Enter new login: ");
@@ -110,6 +110,7 @@ public class Administrator {
                 "\nType 'cancel' to cancel");
         try{
             String acNo=scan.nextLine();
+            String accNo=String.valueOf(accountNumber);
             if(accNo.equals(acNo)){
                 System.out.println("You wish to delete the account held by Mr " +name+
                         " ; If this information is correct please re-enter the account number: " +
@@ -165,6 +166,7 @@ public class Administrator {
         System.out.println("\n3---Update Account Information \n");
         System.out.println("Enter the Account Number: ");
         String accountNo=scan.nextLine();
+        String accNo=String.valueOf(accountNumber);
         if(accountNo.equals(accNo)) {
             System.out.println("Login: " + login);
             System.out.println("Pin Code: " + pin);
@@ -193,7 +195,10 @@ public class Administrator {
             System.out.println("Balance: ");
             String balance1=scan.nextLine();
             if (balance1.equals("")) System.out.println();
-            else bal = balance1;
+            else{
+                bal = balance1;
+                balance=Double.parseDouble(bal);
+            }
 
             System.out.println("Status: ");
             String status1=scan.nextLine();
@@ -212,10 +217,106 @@ public class Administrator {
         }
     }
     public void search_for_account(){
+        System.out.println("4---Search for Account ");
+        System.out.println("Search Menu");
+        System.out.println("Account ID:");
+        String ac=scan.nextLine();
+        String accNo=String.valueOf(accountNumber);
+        if(ac.equals(accNo)){
+            System.out.println("Login: "+login+"\nPin: "+pin+"\nStatus: "+name+"\nType: "+type+"\nBalance: "+bal+"\nStatus: "+status);
+            System.out.println("\n\nType 'ok'");
+            scan.nextLine();
+            display();
+        }
+        else{
+            System.out.println("Account does not exist");
+            try{
+                Thread.sleep(2000);
+                display();
+            }catch (InterruptedException ie){
+                System.out.println("An exception occurred");
+            }
+        }
 
     }
     public void view_reports(){
-
+        for(int i=0;i<15;i++) System.out.println();
+        System.out.println("\n      5---View Reports\n");
+        System.out.println("1---Accounts By Amount");
+        System.out.println("2---Accounts By Date");
+        System.out.println("Type 'cancel' to cancel");
+        System.out.println("Enter your choice: ");
+        String choice=scan.nextLine();
+        String bal1,bal2;
+        double minBal=0,maxBal=0;
+        switch (choice) {
+            case "1" -> {
+                System.out.println("Enter the minimum amount: ");
+                try {
+                    bal1 = scan.nextLine();
+                    minBal = Double.parseDouble(bal1);
+                } catch (Exception e) {
+                    System.out.println("Please provide correct input");
+                    view_reports();
+                }
+                System.out.println("Enter the maximum amount:");
+                try {
+                    bal2 = scan.nextLine();
+                    maxBal = Double.parseDouble(bal2);
+                } catch (Exception e) {
+                    System.out.println("Please provide correct input");
+                    view_reports();
+                }
+                System.out.println("==== SEARCH RESULTS ======");
+                if (minBal != balance || maxBal != balance) {
+                    try {
+                        System.out.println("No result found");
+                        Thread.sleep(2000);
+                        view_reports();
+                    } catch (InterruptedException ie) {
+                        System.out.println("An exception occurred");
+                    }
+                } else {
+                    System.out.println("Login: " + login + "\nPin: " + pin + "\nStatus: " + name + "\nType: " + type + "\nBalance: " + bal + "\nStatus: " + status);
+                    System.out.println("\n\nType 'ok'");
+                    scan.nextLine();
+                    display();
+                }
+            }
+            case "2" -> {
+                System.out.println("Enter the starting date(DD/MM/YY): ");
+                String date1 = scan.nextLine();
+                System.out.println("Enter the ending date(DD/MM/YY): ");
+                String date2 = scan.nextLine();
+                if (date1.equals(date2) && date1.equals(date)) {
+                    System.out.println("==== SEARCH RESULTS ======");
+                    System.out.println("Login: " + login + "\nPin: " + pin + "\nStatus: " + name + "\nType: " + type + "\nBalance: " + bal + "\nStatus: " + status);
+                    System.out.println("\n\nType 'ok'");
+                    scan.nextLine();
+                    display();
+                } else {
+                    try {
+                        System.out.println("No data found");
+                        Thread.sleep(2000);
+                        display();
+                    } catch (InterruptedException ie) {
+                        System.out.println("An exception occurred");
+                    }
+                }
+            }
+            case "cancel" -> display();
+            default -> {
+                try {
+                    System.out.println("Please provide correct input");
+                    Thread.sleep(2000);
+                    view_reports();
+                }catch (InterruptedException ie){
+                    System.out.println("An exception occurred");
+                    System.out.println("Type 'ok'");
+                    scan.nextLine();
+                    view_reports();
+                }
+            }
+        }
     }
-
 }

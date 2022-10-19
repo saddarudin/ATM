@@ -9,12 +9,17 @@ public class Customers{
 5----Exit
 */
 
+//    Customers c1=new Customers();
+    Administrator admin=new Administrator();
+
+    int accountNumber=admin.accountNumber;
+    String date=admin.date;
     Scanner scan=new Scanner(System.in);
     //Scanner class to get input from user
     double maxAmount=20000;
     //maxAmount is amount a user can withdraw in one day
 
-    static double rupees=new Administrator().balance;
+     double rupees=admin.balance;
     //this is total balance provided by admin
     public void displayData(){
         //Display method to display options to user
@@ -29,14 +34,14 @@ public class Customers{
         System.out.println("Please select one of the following options: ");
 
             //We take string because user may encounter any character
-            String b=scan.next();
+            String b=scan.nextLine();
             for(int i=0; i<30;i++) System.out.println();
         switch (b) {
             case "1" -> withdraw();
             case "2" -> transfer();
             case "3" -> deposit();
             case "4" -> displayBalance();
-            case "5" -> System.exit(0);
+            case "5" -> ATM_Machine.main(null);
             default -> {
                 System.out.println("                                *** Please enter correct input!!  ***" +
                         "\n-----------------------------------------------------------------------------------------------------------------------------");
@@ -48,14 +53,14 @@ public class Customers{
         System.out.println("                                     1----Withdraw Cash\n");
         System.out.println("NOTE: A single account holder cannot withdraw more then 20,000 in one day");
         System.out.println("        a)Fast Cash\n        b)Normal Cash\n        c)Back\nPlease select a mode of withdrawal");
-        String s=scan.next();
+        String s=scan.nextLine();
         for (int i = 0; i < 30; i++) System.out.println();
         switch (s) {
             case "a" -> {
                 System.out.println("            a) Fast Cash");
                 System.out.println("1----500\n2----1000 \n3----2000 \n4----5000 \n5----10000 \n6----15000 \n7----20000 \n");
                 System.out.println("Select one of the denominations of money:");
-                String st = scan.next();
+                String st = scan.nextLine();
                 String cash = null;
                 switch (st) {
                     case "1" -> cash = "500";
@@ -85,24 +90,20 @@ public class Customers{
                         } else {
 
                             System.out.println("Are you sure you want to withdraw Rs." + cash + " (Y/N)?");
-                            String yes_no = scan.next();
+                            String yes_no = scan.nextLine();
                             if (yes_no.equals("y")) {
                                 maxAmount = maxAmount - enteredCash;
                                 rupees = rupees - enteredCash;
                                 System.out.println("Do you wish to print a receipt (Y/N)?");
-                                String confirm = scan.next();
+                                String confirm = scan.nextLine();
                                 if (confirm.equals("y")) {
-                                    System.out.println("Account #12 \n" +
-                                            "Date: 14/10/2022 \n" +
-                                            "Withdrawn:" + cash + " \n" +
-                                            "Remaining Balance: " + rupees);
-                                    try{
-                                        Thread.sleep(3000);
-                                        displayData();
-                                    }catch (InterruptedException ie){
-                                        System.out.println("Exception occurred");
-                                    }
-
+                                    System.out.println("Account # "+accountNumber);
+                                    System.out.println("Date: "+date);
+                                    System.out.println("Withdrawn: "+cash);
+                                    System.out.println("Remaining Balance: "+rupees);
+                                    System.out.println("\nType 'ok'");
+                                    scan.nextLine();
+                                    displayData();
                                 }
                                 else displayData();
 
@@ -115,7 +116,7 @@ public class Customers{
             case "b" -> {
                 System.out.println("            b) Normal Cash");
                 System.out.println("Enter the withdrawal amount: ");
-                String withdraw = scan.next();
+                String withdraw = scan.nextLine();
                 //Exception handling
                 try {
                     double amount = Double.parseDouble(withdraw);
@@ -132,16 +133,15 @@ public class Customers{
                                 maxAmount=maxAmount-amount;
                                 System.out.println("Cash Successfully Withdrawn!");
                                 System.out.println("Do you wish to print receipt(y/n)?");
-                                char c = scan.next().charAt(0);
+                                char c = scan.nextLine().charAt(0);
                                 if (c == 'y') {
-                                    System.out.println("Account # 12\nDate: 14/10/2022\n Withdrawn: " + amount);
+                                    System.out.println("Account # "+accountNumber);
+                                    System.out.println("Date: "+date);
+                                    System.out.println("Withdrawn: "+amount);
                                     System.out.println("Remaining Balance: " + rupees);
-                                    try{
-                                        Thread.sleep(3000);
-                                        displayData();
-                                    }catch(InterruptedException ie){
-                                        System.out.println("An exception occurred");
-                                    }
+                                    System.out.println("Type 'ok'");
+                                    scan.nextLine();
+                                    displayData();
                                 }
                                 else displayData();
                             }
@@ -164,7 +164,7 @@ public class Customers{
     public void transfer(){
         System.out.println("2----Cash Transfer");
         System.out.println("Enter amount in multiples of 500: ");
-        String enteredMoney=scan.next();
+        String enteredMoney=scan.nextLine();
         try{
             int enteredAmount=Integer.parseInt(enteredMoney);
             if(enteredAmount>0 && enteredAmount%500==0){
@@ -173,23 +173,21 @@ public class Customers{
                     displayData();
                 }else{
                     System.out.println("Enter the account number to which you want to transfer: ");
-                    String accountNo=scan.next();
-                    System.out.println("You wish to deposit Rs "+enteredAmount+" in account held by Mr. ABC; \nPlease re-enter the account number: ");
-                    String confirmAccountNo=scan.next();
+                    String accountNo=scan.nextLine();
+                    System.out.println("You wish to deposit Rs "+enteredAmount+" in account held by Mr. ABC ; \nPlease re-enter the account number: ");
+                    String confirmAccountNo=scan.nextLine();
                     if(accountNo.equals(confirmAccountNo)){
                         rupees=rupees-enteredAmount;
                         System.out.println("Transaction successful");
                         System.out.println("Do you wish to print a receipt (Y/N)?");
                         char c=scan.next().charAt(0);
                         if(c=='y'){
-                            System.out.println("Account number: "+accountNo+"\nDate: 19/10/2022"+"\nAmount transferred: "+enteredAmount);
+
+                            System.out.println("Account number: "+accountNo+"\nDate: "+date+"\nAmount transferred: "+enteredAmount);
                             System.out.println("Remaining Balance: "+rupees);
-                            try{
-                                Thread.sleep(3000);
-                                displayData();
-                            }catch(InterruptedException ie){
-                                System.out.println("An exception occurred");
-                            }
+                            System.out.println("\nType 'ok'");
+                            scan.nextLine();
+                            displayData();
                         }
                         else{
                             displayData();
@@ -213,7 +211,7 @@ public class Customers{
     public void deposit(){
         System.out.println("3----Deposit Cash");
         System.out.println("Enter the cash amount to deposit: ");
-        String deposit=scan.next();
+        String deposit=scan.nextLine();
         try{
             double depositingAmount=Double.parseDouble(deposit);
             if(depositingAmount<=0){
@@ -225,15 +223,12 @@ public class Customers{
             System.out.println("Do you wish to print a receipt (y/n)? ");
             char c=scan.next().charAt(0);
             if(c=='y'){
-                System.out.println("Account number # 12\nDate: 19/10/2022");
+                System.out.println("Account number # "+accountNumber+"\nDate: "+date);
                 System.out.println("Deposited: "+depositingAmount);
                 System.out.println("Total Balance: "+rupees);
-                try{
-                    Thread.sleep(3000);
-                    displayData();
-                }catch(InterruptedException e){
-                    System.out.println("An exception occurred");
-                }
+                System.out.println("Type 'ok'");
+                scan.nextLine();
+                displayData();
             }else displayData();
         }catch(Exception e){
             System.out.println("Please provide valid amount");
@@ -241,14 +236,11 @@ public class Customers{
         }
     }
     public void displayBalance(){
-        System.out.println("Account #12");
-        System.out.println("Date: 19/10/2022");
+        System.out.println("Account # "+accountNumber);
+        System.out.println("Date: "+date);
         System.out.println("Balance: "+rupees);
-        try{
-            Thread.sleep(3000);
-            displayData();
-        }catch(InterruptedException e){
-            System.out.println("An exception occurred");
-        }
+        System.out.println("\nType 'ok'");
+        scan.nextLine();
+        displayData();
     }
 }
