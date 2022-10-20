@@ -8,19 +8,24 @@ public class Customers{
 4----Display Balance
 5----Exit
 */
+//    Administrator admin;
+    static int accountNumber;
+    static String date;
+    static double rupees;
+    double maxAmount=20000;
+    public Customers(){
+//        admin=new Administrator();
+        Customers.accountNumber=Administrator.accountNumber;
+        Customers.date=Administrator.date;
+        //this is total balance provided by admin
+        Customers.rupees=Administrator.balance;
+    }
 
-//    Customers c1=new Customers();
-    Administrator admin=new Administrator();
-
-    int accountNumber=admin.accountNumber;
-    String date=admin.date;
+    //maxAmount is amount a user can withdraw in one day
     Scanner scan=new Scanner(System.in);
     //Scanner class to get input from user
-    double maxAmount=20000;
-    //maxAmount is amount a user can withdraw in one day
 
-     double rupees=admin.balance;
-    //this is total balance provided by admin
+
     public void displayData(){
         //Display method to display options to user
 
@@ -30,7 +35,7 @@ public class Customers{
         System.out.println("2----Cash Transfer");
         System.out.println("3----Deposit Cash");
         System.out.println("4----Display Balance");
-        System.out.println("5----Exit\n");
+        System.out.println("5----Back\n");
         System.out.println("Please select one of the following options: ");
 
             //We take string because user may encounter any character
@@ -78,7 +83,7 @@ public class Customers{
                 }
                 if (cash != null) {
                     double enteredCash = Double.parseDouble(cash);
-                    if (enteredCash > rupees) {
+                    if (enteredCash > Customers.rupees) {
                         System.out.println("You do not have sufficient balance");
                         withdraw();
                     } else {
@@ -93,14 +98,15 @@ public class Customers{
                             String yes_no = scan.nextLine();
                             if (yes_no.equals("y")) {
                                 maxAmount = maxAmount - enteredCash;
-                                rupees = rupees - enteredCash;
+                                Customers.rupees = Customers.rupees - enteredCash;
+                                Administrator.balance-=enteredCash;
                                 System.out.println("Do you wish to print a receipt (Y/N)?");
                                 String confirm = scan.nextLine();
                                 if (confirm.equals("y")) {
-                                    System.out.println("Account # "+accountNumber);
-                                    System.out.println("Date: "+date);
+                                    System.out.println("Account # "+Customers.accountNumber);
+                                    System.out.println("Date: "+Customers.date);
                                     System.out.println("Withdrawn: "+cash);
-                                    System.out.println("Remaining Balance: "+rupees);
+                                    System.out.println("Remaining Balance: "+Customers.rupees);
                                     System.out.println("\nType 'ok'");
                                     scan.nextLine();
                                     displayData();
@@ -121,7 +127,7 @@ public class Customers{
                 try {
                     double amount = Double.parseDouble(withdraw);
                     if (amount < 0) throw new Exception();
-                    if (amount > rupees) {
+                    if (amount > Customers.rupees) {
                             System.out.println("You do not have sufficient balance to perform this transaction");
                             withdraw();
                         } else {
@@ -129,16 +135,17 @@ public class Customers{
                                 System.out.println("Daily Limit exceeded");
                                 withdraw();
                             }else{
-                                rupees = rupees - amount;
+                                Customers.rupees = Customers.rupees - amount;
+                                Administrator.balance-=amount;
                                 maxAmount=maxAmount-amount;
                                 System.out.println("Cash Successfully Withdrawn!");
                                 System.out.println("Do you wish to print receipt(y/n)?");
                                 char c = scan.nextLine().charAt(0);
                                 if (c == 'y') {
-                                    System.out.println("Account # "+accountNumber);
-                                    System.out.println("Date: "+date);
+                                    System.out.println("Account # "+Customers.accountNumber);
+                                    System.out.println("Date: "+Administrator.date);
                                     System.out.println("Withdrawn: "+amount);
-                                    System.out.println("Remaining Balance: " + rupees);
+                                    System.out.println("Remaining Balance: " + Customers.rupees);
                                     System.out.println("Type 'ok'");
                                     scan.nextLine();
                                     displayData();
@@ -168,8 +175,10 @@ public class Customers{
         try{
             int enteredAmount=Integer.parseInt(enteredMoney);
             if(enteredAmount>0 && enteredAmount%500==0){
-                if(enteredAmount>rupees){
+                if(enteredAmount>Customers.rupees){
                     System.out.println("You do not have sufficient balance to perform this transaction");
+                    System.out.println("Type 'ok'");
+                    scan.nextLine();
                     displayData();
                 }else{
                     System.out.println("Enter the account number to which you want to transfer: ");
@@ -177,14 +186,14 @@ public class Customers{
                     System.out.println("You wish to deposit Rs "+enteredAmount+" in account held by Mr. ABC ; \nPlease re-enter the account number: ");
                     String confirmAccountNo=scan.nextLine();
                     if(accountNo.equals(confirmAccountNo)){
-                        rupees=rupees-enteredAmount;
+                        Customers.rupees=Customers.rupees-enteredAmount;
+                        Administrator.balance-=enteredAmount;
                         System.out.println("Transaction successful");
                         System.out.println("Do you wish to print a receipt (Y/N)?");
-                        char c=scan.next().charAt(0);
-                        if(c=='y'){
-
-                            System.out.println("Account number: "+accountNo+"\nDate: "+date+"\nAmount transferred: "+enteredAmount);
-                            System.out.println("Remaining Balance: "+rupees);
+                        String c=scan.nextLine();
+                        if(c.equals("y")){
+                            System.out.println("Account number: "+accountNo+"\nDate: "+Customers.date+"\nAmount transferred: "+enteredAmount);
+                            System.out.println("Remaining Balance: "+Customers.rupees);
                             System.out.println("\nType 'ok'");
                             scan.nextLine();
                             displayData();
@@ -219,13 +228,14 @@ public class Customers{
                 deposit();
             }
             System.out.println("Cash deposited successfully");
-            rupees+=depositingAmount;
+            Customers.rupees+=depositingAmount;
+            Administrator.balance+=depositingAmount;
             System.out.println("Do you wish to print a receipt (y/n)? ");
-            char c=scan.next().charAt(0);
-            if(c=='y'){
-                System.out.println("Account number # "+accountNumber+"\nDate: "+date);
+            String c=scan.nextLine();
+            if(c.equals("y")){
+                System.out.println("Account number # "+Customers.accountNumber+"\nDate: "+Customers.date);
                 System.out.println("Deposited: "+depositingAmount);
-                System.out.println("Total Balance: "+rupees);
+                System.out.println("Total Balance: "+Customers.rupees);
                 System.out.println("Type 'ok'");
                 scan.nextLine();
                 displayData();
@@ -236,9 +246,9 @@ public class Customers{
         }
     }
     public void displayBalance(){
-        System.out.println("Account # "+accountNumber);
-        System.out.println("Date: "+date);
-        System.out.println("Balance: "+rupees);
+        System.out.println("Account # "+Customers.accountNumber);
+        System.out.println("Date: "+Customers.date);
+        System.out.println("Balance: "+Customers.rupees);
         System.out.println("\nType 'ok'");
         scan.nextLine();
         displayData();

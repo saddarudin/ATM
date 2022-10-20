@@ -1,16 +1,16 @@
 import java.util.Scanner;
 
 public class Administrator {
-    double balance;
-    int accountNumber=15;
+    static double balance;
+    static int accountNumber;
 //    String accNo=String.valueOf(accountNumber);
-    String date="20/10/2022";
-    String login;
-    String pin;
-    String name="X";
-    String type;
-    String bal;
-    String status;
+    static String date="20/10/2022";
+    static String login;
+    static String pin;
+    static String name;
+    static String type;
+    static String bal;
+    static String status;
     Scanner scan=new Scanner(System.in);
     public void display(){
         for(int i=0; i<30; i++) System.out.println();
@@ -20,7 +20,7 @@ public class Administrator {
         System.out.println("3----Update Account Information.");
         System.out.println("4----Search for Account.");
         System.out.println("5----View Reports.");
-        System.out.println("6----Exit");
+        System.out.println("6----Back");
         System.out.println("\nEnter your choice:");
         String choice=scan.nextLine();
         for(int i=0; i<30;i++) System.out.println();
@@ -47,44 +47,44 @@ public class Administrator {
     public void creating_new_account(){
         System.out.println("1----Create New Account");
         System.out.println("Enter new login: ");
-        login=scan.nextLine();
-        if(login.isEmpty()){
+        Administrator.login=scan.nextLine();
+        if(Administrator.login.isEmpty()){
             System.out.println("Must enter login");
             creating_new_account();
         }
         for(int i=0;i<15;i++) System.out.println();
         System.out.println("Pin code: ");
-        pin=scan.nextLine();
-        if(pin.isEmpty()){
+        Administrator.pin=scan.nextLine();
+        if(Administrator.pin.isEmpty()){
             System.out.println("Must enter pin code");
             creating_new_account();
         }
         for(int i=0;i<15;i++) System.out.println();
         System.out.println("Holders name: ");
-        name=scan.nextLine();
-        if(name.isEmpty()){
+        Administrator.name=scan.nextLine();
+        if(Administrator.name.isEmpty()){
             System.out.println("Must enter name!!");
             creating_new_account();
         }
         for(int i=0;i<15;i++) System.out.println();
         System.out.println("Type (savings/current): ");
-        type=scan.nextLine();
-        if(type.equals("savings")||type.equals("current")){
+        Administrator.type=scan.nextLine();
+        if(Administrator.type.equals("savings")||Administrator.type.equals("current")){
             for(int i=0;i<15;i++) System.out.println();
             System.out.println("Initial Balance: ");
-            bal=scan.nextLine();
+            Administrator.bal=scan.nextLine();
             try{
-                if(bal.isEmpty()){
+                if(Administrator.bal.isEmpty()){
                     System.out.println("must enter initial balance");
                     creating_new_account();
                 }else{
-                    balance= Double.parseDouble(bal);
+                    Administrator.balance= Double.parseDouble(Administrator.bal);
                     for(int i=0;i<15;i++) System.out.println();
                     System.out.println("Status (active): ");
-                    status=scan.nextLine();
-                    if(status.equals("active")){
+                    Administrator.status=scan.nextLine();
+                    if(Administrator.status.equals("active")){
                         for(int i=0;i<15;i++) System.out.println();
-                        System.out.println("Account successfully created - the account number assigned is: "+(++accountNumber));
+                        System.out.println("Account successfully created - the account number assigned is: "+(++Administrator.accountNumber));
                         System.out.println("Press ok");
                         scan.nextLine();
                         display();
@@ -110,21 +110,21 @@ public class Administrator {
                 "\nType 'cancel' to cancel");
         try{
             String acNo=scan.nextLine();
-            String accNo=String.valueOf(accountNumber);
+            String accNo=String.valueOf(Administrator.accountNumber);
             if(accNo.equals(acNo)){
-                System.out.println("You wish to delete the account held by Mr " +name+
+                System.out.println("You wish to delete the account held by Mr " +Administrator.name+
                         " ; If this information is correct please re-enter the account number: " +
                         "\nType 'cancel' to cancel");
                 String accountant=scan.nextLine();
                 if(acNo.equals(accountant)){
                     System.out.println("Account deleted successfully");
-                    balance=0;
-                    accountNumber=0;
-                    login="";
-                    pin="";
-                    name="";
-                    type="";
-                    status="dead";
+                    Administrator.balance=0;
+                    Administrator.accountNumber=0;
+                    Administrator.login="";
+                    Administrator.pin="";
+                    Administrator.name="";
+                    Administrator.type="";
+                    Administrator.status="dead";
                     System.out.println("Press ok");
                     scan.nextLine();
                     display();
@@ -166,44 +166,44 @@ public class Administrator {
         System.out.println("\n3---Update Account Information \n");
         System.out.println("Enter the Account Number: ");
         String accountNo=scan.nextLine();
-        String accNo=String.valueOf(accountNumber);
+        String accNo=String.valueOf(Administrator.accountNumber);
         if(accountNo.equals(accNo)) {
-            System.out.println("Login: " + login);
-            System.out.println("Pin Code: " + pin);
-            System.out.println("Name: " + name);
-            System.out.println("Type: " + type);
-            System.out.println("Balance: " + balance);
-            System.out.println("Status: " + status);
+            System.out.println("Login: " + Administrator.login);
+            System.out.println("Pin Code: " + Administrator.pin);
+            System.out.println("Name: " + Administrator.name);
+            System.out.println("Type: " + Administrator.type);
+            System.out.println("Balance: " + Administrator.balance);
+            System.out.println("Status: " + Administrator.status);
             System.out.println("\nPlease enter in the fields you wish to update (leave blank otherwise): \n");
             System.out.println("Enter new login: ");
             String login1 = scan.nextLine();
             if (login1.equals("")) System.out.println();
-            else login = login1;
+            else Administrator.login = login1;
             System.out.println("Pin code: ");
             String pin1 = scan.nextLine();
             if (pin1.equals("")) System.out.println();
-            else pin = pin1;
+            else Administrator.pin = pin1;
             System.out.println("Name: ");
             String name1=scan.nextLine();
             if (name1.equals("")) System.out.println();
-            else name = name1;
+            else Administrator.name = name1;
             System.out.println("Type: ");
             String type1=scan.nextLine();
             if (type1.equals("")) System.out.println();
-            else type = type1;
+            else Administrator.type = type1;
 
             System.out.println("Balance: ");
             String balance1=scan.nextLine();
             if (balance1.equals("")) System.out.println();
             else{
-                bal = balance1;
-                balance=Double.parseDouble(bal);
+                Administrator.bal = balance1;
+                Administrator.balance=Double.parseDouble(Administrator.bal);
             }
 
             System.out.println("Status: ");
             String status1=scan.nextLine();
             if (status1.equals("")) System.out.println();
-            else status = status1;
+            else Administrator.status = status1;
             System.out.println("Your account has been successfully updated.");
             try{
                 Thread.sleep(2000);
@@ -221,9 +221,9 @@ public class Administrator {
         System.out.println("Search Menu");
         System.out.println("Account ID:");
         String ac=scan.nextLine();
-        String accNo=String.valueOf(accountNumber);
-        if(ac.equals(accNo)){
-            System.out.println("Login: "+login+"\nPin: "+pin+"\nStatus: "+name+"\nType: "+type+"\nBalance: "+bal+"\nStatus: "+status);
+        String accNo=String.valueOf(Administrator.accountNumber);
+        if(accNo.equals(ac)){
+            System.out.println("Login: "+Administrator.login+"\nPin: "+Administrator.pin+"\nName: "+Administrator.name+"\nType: "+Administrator.type+"\nBalance: "+Administrator.bal+"\nStatus: "+Administrator.status);
             System.out.println("\n\nType 'ok'");
             scan.nextLine();
             display();
@@ -268,7 +268,7 @@ public class Administrator {
                     view_reports();
                 }
                 System.out.println("==== SEARCH RESULTS ======");
-                if (minBal != balance || maxBal != balance) {
+                if (minBal != Administrator.balance || maxBal != Administrator.balance) {
                     try {
                         System.out.println("No result found");
                         Thread.sleep(2000);
@@ -277,7 +277,7 @@ public class Administrator {
                         System.out.println("An exception occurred");
                     }
                 } else {
-                    System.out.println("Login: " + login + "\nPin: " + pin + "\nStatus: " + name + "\nType: " + type + "\nBalance: " + bal + "\nStatus: " + status);
+                    System.out.println("Login: " + Administrator.login + "\nPin: " + Administrator.pin + "\nStatus: " + Administrator.name + "\nType: " + Administrator.type + "\nBalance: " + Administrator.bal + "\nStatus: " + Administrator.status);
                     System.out.println("\n\nType 'ok'");
                     scan.nextLine();
                     display();
@@ -288,9 +288,9 @@ public class Administrator {
                 String date1 = scan.nextLine();
                 System.out.println("Enter the ending date(DD/MM/YY): ");
                 String date2 = scan.nextLine();
-                if (date1.equals(date2) && date1.equals(date)) {
+                if (date1.equals(date2) && date1.equals(Administrator.date)) {
                     System.out.println("==== SEARCH RESULTS ======");
-                    System.out.println("Login: " + login + "\nPin: " + pin + "\nStatus: " + name + "\nType: " + type + "\nBalance: " + bal + "\nStatus: " + status);
+                    System.out.println("Login: " + Administrator.login + "\nPin: " + Administrator.pin + "\nStatus: " + Administrator.name + "\nType: " + Administrator.type + "\nBalance: " + Administrator.bal + "\nStatus: " + Administrator.status);
                     System.out.println("\n\nType 'ok'");
                     scan.nextLine();
                     display();
