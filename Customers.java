@@ -203,16 +203,22 @@ public class Customers{
                         }
                     }else{
                         System.out.println("Account number does not match to previous");
+                        System.out.println("Type 'ok'");
+                        scan.nextLine();
                         displayData();
                     }
                 }
 
             }else{
                 System.out.println("Enter correct amount");
+                System.out.println("Type 'ok'");
+                scan.nextLine();
                 displayData();
             }
         }catch(Exception e){
             System.out.println("Please enter correct amount multiple of 500");
+            System.out.println("Type 'ok'");
+            scan.nextLine();
             displayData();
         }
 
